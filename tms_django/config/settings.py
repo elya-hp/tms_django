@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_spectacular",
     # My Apps:
-    "users.apps.UsersConfig",
-    "tms.apps.TmsConfig",
+    "apps.users.apps.UsersConfig",
+    "apps.tms.apps.TmsConfig",
 ]
 # TODO: add django-filters
 

@@ -1,0 +1,22 @@
+[flake8]
+max-line-length = 119
+
+# E203: whitespace before ':' (black behaviour)
+# W503: line break before binary operator (black behaviour)
+# E702	Multiple statements on one line (semicolon)
+# E731	Do not assign a lambda expression, use a def
+# E401	Multiple imports on one line
+# PT001 use @pytest.fixture() over @pytest.fixture
+# VNE001 single letter variable names are not allowed
+# F841 local var is assigned to but never used [TEMPORARY]
+
+# TODO: Next exclusions were added just to commit reformators, ignoring such rules is unacceptable, remove it as soon as you can!
+# F401 imported but unused [TEMPORARY]
+# T201 print found [TEMPORARY]
+# T203 pprint found [TEMPORARY]
+# W291 trailing whitespace [TEMPORARY]
+# E501 line too long (152 > 119 characters)
+# VNE003 variable names that shadows buildins are not allowed [TEMPORARY]
+# E999 SyntaxError: invalid syntax [TEMPORARY]  # TODO: wtf?
+# W293  blank line contains whitespace (not useful for SQL)
+ignore = E702,E731,E401,PT001,VNE001,W503,F841,E203,E231,F401,T201,T203,W291,E501,VNE003,W293,PT009

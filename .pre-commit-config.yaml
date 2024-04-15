@@ -1,0 +1,47 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+
+    hooks:
+      - id: black
+        exclude: migrations|mocks
+        args: [--line-length=119,  --target-version=py311]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: check-json
+#      - id: check-yaml
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        args: ["--config=.flake8"]
+        exclude: migrations|mocks
+        additional_dependencies: [
+          'flake8-variables-names==0.0.6',     # Helps to make more readable variables names [ https://pypi.org/project/flake8-variables-names/ ]
+          'flake8-print==5.0.0',               # Check for Print statements in python files. [ https://pypi.org/project/flake8-print/ ]
+          'flake8-pytest-style==1.7.2',        # Check common style issues or inconsistencies with pytest [ https://github.com/m-burst/flake8-pytest-style ]
+        ]
+
+#  - repo: https://github.com/asottile/seed-isort-config
+#    rev: v2.1.0
+#    hooks:
+#      - id: seed-isort-config
+#        args: ["--application-directories=src"]
+
+
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black", "--filter-files"]
+        name: isort
+        entry: isort
+        require_serial: true
+        exclude: migrations/.*
+        language: python
+        types: [python]

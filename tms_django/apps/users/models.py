@@ -10,3 +10,6 @@ class User(AbstractUser):
         DISPATCHER = "dispatcher"
 
     user_type = models.CharField(max_length=100, choices=UserType, null=True)
+
+
+# TODO: check smth

@@ -30,8 +30,8 @@ def generate_model_custom_id(model_name: str, custom_id_field_name: str, default
 
 class TruckKind(models.TextChoices):
     SPRINTER = "sprinter"
-    SMALL_STRAIGHT = "small straight"
-    LARGE_STRAIGHT = "large straight"
+    SMALL_STRAIGHT = "small_straight"
+    LARGE_STRAIGHT = "large_straight"
 
 
 class Truck(models.Model):

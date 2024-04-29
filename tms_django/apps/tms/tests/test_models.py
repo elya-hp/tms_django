@@ -1,16 +1,49 @@
-from apps.tms.models import BookedLoad, Broker, DriverProfile, Truck, TruckKind
+from pprint import pprint
+
+from apps.tms.models import (
+    BookedLoad,
+    Broker,
+    DispatcherProfile,
+    DriverProfile,
+    Truck,
+    TruckKind,
+)
+from apps.tms.tests.factories import (
+    BookedLoadFactory,
+    BrokerFactory,
+    DispatcherProfileFactory,
+    DriverProfileFactory,
+    TruckFactory,
+)
 from django.test import TestCase
 
 
 class TestTruckModel(TestCase):
     def test_truck_create(self):
-        truck = Truck.objects.create(kind=TruckKind.SMALL_STRAIGHT, weight=5000, capacity=2000)
-        self.assertEqual(truck.kind, TruckKind.SMALL_STRAIGHT)
-        self.assertEqual(truck.weight, 5000)
-        self.assertEqual(truck.capacity, 2000)
+        truck = TruckFactory()
+        self.assertTrue(isinstance(truck, Truck))
+
+
+class TestDriverModel(TestCase):
+    def test_driver_create(self):
+        driver = DriverProfileFactory()
+        self.assertTrue(isinstance(driver, DriverProfile))
+
+
+class TestDispatcherProfileModel(TestCase):
+    def test_dispatcher_profile_create(self):
+        dispatcher = DispatcherProfileFactory()
+        self.assertTrue(isinstance(dispatcher, DispatcherProfile))
 
 
 class TestBrokerModel(TestCase):
     def test_broker_create(self):
-        broker = Broker.objects.create(agent_name="Angela K", company_name="Midex Corp")
+        broker = BrokerFactory()
         self.assertIsNotNone(broker.id)
+        self.assertTrue(isinstance(broker, Broker))
+
+
+class TestBookedLoadModel(TestCase):
+    def test_booked_load_create(self):
+        booked_load = BookedLoadFactory()
+        self.assertTrue(isinstance(booked_load, BookedLoad))

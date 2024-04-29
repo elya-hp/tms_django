@@ -1,5 +1,5 @@
 import factory
-from apps.tms.tests.factories import DispatcherProfileFactory
+from apps.tms.tests.factories import DispatcherProfileFactory, DriverProfileFactory
 from faker import Faker
 
 fake = Faker()
@@ -18,5 +18,5 @@ class DispatcherUserFactory(UserFactory):
     profile = factory.RelatedFactory(DispatcherProfileFactory, factory_related_name="user")
 
 
-user = UserFactory()
-user2 = DispatcherUserFactory()
+class DriverUserFactory(UserFactory):
+    profile = factory.RelatedFactory(DriverProfileFactory, factory_related_name="user")

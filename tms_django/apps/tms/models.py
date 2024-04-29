@@ -51,6 +51,10 @@ generate_unit_id = partial(
 class DriverProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="driver_profile", on_delete=models.CASCADE)
     unit_id = models.CharField(max_length=6, unique=True, db_index=True, default=generate_unit_id)
+    phone_number = models.CharField(max_length=255, blank=False)
+    driver_licence = models.CharField(max_length=255, blank=False)
+    date_of_birth = models.DateField(null=True, blank=False)
+    address = models.CharField(max_length=255)
     truck = models.ForeignKey(Truck, null=True, on_delete=models.CASCADE)
 
 
@@ -62,6 +66,7 @@ class DispatcherProfile(models.Model):
 class Broker(models.Model):  # TODO add more details (broker MC)
     agent_name = models.CharField(max_length=50)
     company_name = models.CharField(max_length=50)
+    mc_number = models.CharField(max_length=10)
 
     def __str__(self) -> str:
         return f"{self.company_name}"
@@ -92,7 +97,6 @@ class BookedLoad(models.Model):
     load_id = models.CharField(max_length=6, unique=True, db_index=True, default=generate_load_id)
     status = models.CharField(choices=Status, max_length=255)
     driver = models.ForeignKey("tms.DriverProfile", on_delete=models.CASCADE)
-    supported_truck_kind = models.ManyToManyField(Truck)
     pickup_location = models.CharField(max_length=30)
     delivery_location = models.CharField(max_length=30)
     distance = models.IntegerField(null=True, default=None, validators=[MinValueValidator(0)])

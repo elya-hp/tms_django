@@ -1,4 +1,4 @@
-from apps.tms.generators import generate_load_id, generate_unit_id
+from apps.tms.generators import generate_invoice_id, generate_load_id, generate_unit_id
 from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.db import OperationalError, models
@@ -77,7 +77,7 @@ class BookedLoad(models.Model):
     broker = models.ForeignKey(Broker, on_delete=models.CASCADE)
     total_rate = models.IntegerField(default=None)
     driver_rate = models.IntegerField(default=None)
-    invoice_id = models.CharField(max_length=8, unique=True, db_index=True, default=None, null=True)
+    invoice_id = models.CharField(max_length=8, unique=True, db_index=True, default=generate_invoice_id)
 
     def __str__(self) -> str:
         return f"load_id={self.load_id} [{self.status}]"

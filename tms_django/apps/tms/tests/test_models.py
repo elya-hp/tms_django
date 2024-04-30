@@ -1,13 +1,4 @@
-from pprint import pprint
-
-from apps.tms.models import (
-    BookedLoad,
-    Broker,
-    DispatcherProfile,
-    DriverProfile,
-    Truck,
-    TruckKind,
-)
+from apps.tms.models import BookedLoad, Broker, DispatcherProfile, DriverProfile, Truck
 from apps.tms.tests.factories import (
     BookedLoadFactory,
     BrokerFactory,
@@ -15,6 +6,7 @@ from apps.tms.tests.factories import (
     DriverProfileFactory,
     TruckFactory,
 )
+from apps.users.models import User
 from django.test import TestCase
 
 
@@ -29,32 +21,48 @@ class TestTruckModel(TestCase):
         self.assertIsNotNone(instance.id)
 
 
-# TODO: update tests below (as TestTruckModel) so that they are structured in the same way:
-
-
 class TestDriverModel(TestCase):
-    def test_driver_create(self):
-        driver = DriverProfileFactory()
-        self.assertTrue(isinstance(driver, DriverProfile))
-        # todo: make sure [user, truck] object(s) are created
+    model_cls = DriverProfile
+
+    def test_factory(self):
+        instance = DriverProfileFactory()
+
+        instance.refresh_from_db()
+        self.assertTrue(instance, self.model_cls)
+        self.assertTrue(isinstance(instance.user, User))
+        self.assertTrue(isinstance(instance.truck, Truck))
 
 
 class TestDispatcherProfileModel(TestCase):
-    def test_dispatcher_profile_create(self):
-        dispatcher = DispatcherProfileFactory()
-        self.assertTrue(isinstance(dispatcher, DispatcherProfile))
-        # todo: make sure [user] object(s) are created
+    model_cls = DispatcherProfile
+
+    def test_factory(self):
+        instance = DispatcherProfileFactory()
+
+        instance.refresh_from_db()
+        self.assertTrue(isinstance(instance, self.model_cls))
+        self.assertTrue(isinstance(instance.user, User))
 
 
 class TestBrokerModel(TestCase):
-    def test_broker_create(self):
-        broker = BrokerFactory()
-        self.assertIsNotNone(broker.id)
-        self.assertTrue(isinstance(broker, Broker))
+    model_cls = Broker
+
+    def test_factory(self):
+        instance = BrokerFactory()
+
+        instance.refresh_from_db()
+        self.assertIsNotNone(instance.id)
+        self.assertTrue(isinstance(instance, self.model_cls))
 
 
 class TestBookedLoadModel(TestCase):
-    def test_booked_load_create(self):
-        booked_load = BookedLoadFactory()
-        self.assertTrue(isinstance(booked_load, BookedLoad))
-        # todo: make sure all related object(s) are created
+    model_cls = BookedLoad
+
+    def test_factory(self):
+        instance = BookedLoadFactory()
+        self.assertTrue(isinstance(instance, self.model_cls))
+        self.assertTrue(isinstance(instance.status, BookedLoad.Status))
+        self.assertTrue(isinstance(instance.driver, DriverProfile))
+        self.assertTrue(isinstance(instance.dispatcher, DispatcherProfile))
+        self.assertTrue(isinstance(instance.broker, Broker))
+

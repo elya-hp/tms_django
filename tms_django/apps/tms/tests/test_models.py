@@ -19,9 +19,17 @@ from django.test import TestCase
 
 
 class TestTruckModel(TestCase):
-    def test_truck_create(self):
-        truck = TruckFactory()
-        self.assertTrue(isinstance(truck, Truck))
+    model_cls = Truck
+
+    def test_factory(self):
+        instance = TruckFactory()
+
+        instance.refresh_from_db()
+        self.assertIsInstance(instance, self.model_cls)
+        self.assertIsNotNone(instance.id)
+
+
+# TODO: update tests below (as TestTruckModel) so that they are structured in the same way:
 
 
 class TestDriverModel(TestCase):

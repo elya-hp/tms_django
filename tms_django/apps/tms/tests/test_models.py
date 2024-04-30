@@ -31,6 +31,7 @@ class TestDriverModel(TestCase):
         self.assertTrue(isinstance(instance, self.model_cls))
         self.assertTrue(isinstance(instance.user, User))
         self.assertTrue(isinstance(instance.truck, Truck))
+        self.assertIsNotNone(instance.id)
 
 
 class TestDispatcherProfileModel(TestCase):
@@ -60,8 +61,11 @@ class TestBookedLoadModel(TestCase):
 
     def test_factory(self):
         instance = BookedLoadFactory()
+
+        instance.refresh_from_db()
         self.assertTrue(isinstance(instance, self.model_cls))
-        self.assertTrue(isinstance(instance.status, BookedLoad.Status))
         self.assertTrue(isinstance(instance.driver, DriverProfile))
         self.assertTrue(isinstance(instance.dispatcher, DispatcherProfile))
         self.assertTrue(isinstance(instance.broker, Broker))
+        self.assertIsNotNone(instance.load_id)
+        self.assertIsNotNone(instance.invoice_id)

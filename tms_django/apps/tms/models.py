@@ -84,6 +84,7 @@ class BookedLoad(models.Model):
 
 
 class Billing(BookedLoad):
+    # TODO: move me to admin module
     class Meta:
         proxy = True
         verbose_name_plural = "Billing"

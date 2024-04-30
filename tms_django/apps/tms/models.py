@@ -1,31 +1,9 @@
-from __future__ import annotations
-
-from functools import partial
-
-from django.apps import apps
+from apps.tms.generators import generate_load_id, generate_unit_id
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import MinValueValidator
 from django.db import OperationalError, models
 from django.utils.translation import gettext_lazy as _
 from loguru import logger
-
-
-def generate_model_custom_id(model_name: str, custom_id_field_name: str, default_value: int) -> str:
-    model = apps.get_model(app_label="tms", model_name=model_name)
-
-    try:
-        instance = model.objects.order_by("-id")[:1].get()
-    except (OperationalError, ObjectDoesNotExist):
-        logger.info(f"No record found for {model_name}, setting {default_value=}")
-        last_custom_id = default_value
-
-    else:
-        last_custom_id = getattr(instance, custom_id_field_name)
-        logger.info(f"Last id for {model_name}: {last_custom_id}")
-        last_custom_id = int(last_custom_id) + 1
-
-    return str(last_custom_id)
 
 
 class TruckKind(models.TextChoices):
@@ -40,12 +18,7 @@ class Truck(models.Model):
     capacity = models.IntegerField(null=True, default=None, validators=[MinValueValidator(0)])
 
     def __str__(self) -> str:
-        return f"{self.kind}"
-
-
-generate_unit_id = partial(
-    generate_model_custom_id, model_name="DriverProfile", custom_id_field_name="unit_id", default_value=1000
-)
+        return f"{self.kind} id={self.id}"
 
 
 class DriverProfile(models.Model):
@@ -57,28 +30,26 @@ class DriverProfile(models.Model):
     address = models.CharField(max_length=255)
     truck = models.ForeignKey(Truck, null=True, on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return f"unit_id={self.unit_id}"
+
 
 class DispatcherProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="dispatcher_profile", on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=255)
 
+    def __str__(self) -> str:
+        return f"id={self.id}"
 
-class Broker(models.Model):  # TODO add more details (broker MC)
+
+class Broker(models.Model):
     agent_name = models.CharField(max_length=50)
     company_name = models.CharField(max_length=50)
     mc_number = models.CharField(max_length=10)
+    # TODO add more details (broker MC)
 
     def __str__(self) -> str:
-        return f"{self.company_name}"
-
-
-generate_load_id = partial(
-    generate_model_custom_id, model_name="BookedLoad", custom_id_field_name="load_id", default_value=2000
-)
-
-generate_invoice_id = partial(
-    generate_model_custom_id, model_name="BookedLoad", custom_id_field_name="invoice_id", default_value=330000
-)
+        return f"{self.agent_name} from {self.company_name}, id={self.id}"
 
 
 class BookedLoad(models.Model):
@@ -108,8 +79,12 @@ class BookedLoad(models.Model):
     driver_rate = models.IntegerField(default=None)
     invoice_id = models.CharField(max_length=8, unique=True, db_index=True, default=None, null=True)
 
+    def __str__(self) -> str:
+        return f"load_id={self.load_id} [{self.status}]"
+
 
 class Billing(BookedLoad):
+    # TODO: move me to admin module
     class Meta:
         proxy = True
         verbose_name_plural = "Billing"

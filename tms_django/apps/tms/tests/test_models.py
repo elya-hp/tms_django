@@ -19,21 +19,31 @@ from django.test import TestCase
 
 
 class TestTruckModel(TestCase):
-    def test_truck_create(self):
-        truck = TruckFactory()
-        self.assertTrue(isinstance(truck, Truck))
+    model_cls = Truck
+
+    def test_factory(self):
+        instance = TruckFactory()
+
+        instance.refresh_from_db()
+        self.assertIsInstance(instance, self.model_cls)
+        self.assertIsNotNone(instance.id)
+
+
+# TODO: update tests below (as TestTruckModel) so that they are structured in the same way:
 
 
 class TestDriverModel(TestCase):
     def test_driver_create(self):
         driver = DriverProfileFactory()
         self.assertTrue(isinstance(driver, DriverProfile))
+        # todo: make sure [user, truck] object(s) are created
 
 
 class TestDispatcherProfileModel(TestCase):
     def test_dispatcher_profile_create(self):
         dispatcher = DispatcherProfileFactory()
         self.assertTrue(isinstance(dispatcher, DispatcherProfile))
+        # todo: make sure [user] object(s) are created
 
 
 class TestBrokerModel(TestCase):
@@ -47,3 +57,4 @@ class TestBookedLoadModel(TestCase):
     def test_booked_load_create(self):
         booked_load = BookedLoadFactory()
         self.assertTrue(isinstance(booked_load, BookedLoad))
+        # todo: make sure all related object(s) are created

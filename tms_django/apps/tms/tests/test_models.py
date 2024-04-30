@@ -28,7 +28,7 @@ class TestDriverModel(TestCase):
         instance = DriverProfileFactory()
 
         instance.refresh_from_db()
-        self.assertTrue(instance, self.model_cls)
+        self.assertTrue(isinstance(instance, self.model_cls))
         self.assertTrue(isinstance(instance.user, User))
         self.assertTrue(isinstance(instance.truck, Truck))
 

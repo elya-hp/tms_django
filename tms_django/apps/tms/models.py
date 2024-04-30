@@ -18,7 +18,7 @@ class Truck(models.Model):
     capacity = models.IntegerField(null=True, default=None, validators=[MinValueValidator(0)])
 
     def __str__(self) -> str:
-        return f"{self.kind}"
+        return f"{self.kind} id={self.id}"
 
 
 class DriverProfile(models.Model):
@@ -30,19 +30,26 @@ class DriverProfile(models.Model):
     address = models.CharField(max_length=255)
     truck = models.ForeignKey(Truck, null=True, on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return f"unit_id={self.unit_id}"
+
 
 class DispatcherProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name="dispatcher_profile", on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=255)
 
+    def __str__(self) -> str:
+        return f"id={self.id}"
 
-class Broker(models.Model):  # TODO add more details (broker MC)
+
+class Broker(models.Model):
     agent_name = models.CharField(max_length=50)
     company_name = models.CharField(max_length=50)
     mc_number = models.CharField(max_length=10)
+    # TODO add more details (broker MC)
 
     def __str__(self) -> str:
-        return f"{self.company_name}"
+        return f"{self.agent_name} from {self.company_name}, id={self.id}"
 
 
 class BookedLoad(models.Model):
@@ -71,6 +78,9 @@ class BookedLoad(models.Model):
     total_rate = models.IntegerField(default=None)
     driver_rate = models.IntegerField(default=None)
     invoice_id = models.CharField(max_length=8, unique=True, db_index=True, default=None, null=True)
+
+    def __str__(self) -> str:
+        return f"load_id={self.load_id} [{self.status}]"
 
 
 class Billing(BookedLoad):

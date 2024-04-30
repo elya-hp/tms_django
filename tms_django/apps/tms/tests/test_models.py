@@ -65,4 +65,3 @@ class TestBookedLoadModel(TestCase):
         self.assertTrue(isinstance(instance.driver, DriverProfile))
         self.assertTrue(isinstance(instance.dispatcher, DispatcherProfile))
         self.assertTrue(isinstance(instance.broker, Broker))
-

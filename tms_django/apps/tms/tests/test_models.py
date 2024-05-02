@@ -58,9 +58,9 @@ class TestDriverModel(TestCase):
         instance = DriverProfileFactory()
 
         instance.refresh_from_db()
-        self.assertTrue(isinstance(instance, self.model_cls))
-        self.assertTrue(isinstance(instance.user, User))
-        self.assertTrue(isinstance(instance.truck, Truck))
+        self.assertTrue(instance, self.model_cls)
+        self.assertTrue(instance.user, User)
+        self.assertTrue(instance.truck, Truck)
         self.assertIsNotNone(instance.id)
 
 
@@ -71,8 +71,8 @@ class TestDispatcherProfileModel(TestCase):
         instance = DispatcherProfileFactory()
 
         instance.refresh_from_db()
-        self.assertTrue(isinstance(instance, self.model_cls))
-        self.assertTrue(isinstance(instance.user, User))
+        self.assertTrue(instance, self.model_cls)
+        self.assertTrue(instance.user, User)
 
 
 class TestBrokerModel(TestCase):
@@ -83,7 +83,7 @@ class TestBrokerModel(TestCase):
 
         instance.refresh_from_db()
         self.assertIsNotNone(instance.id)
-        self.assertTrue(isinstance(instance, self.model_cls))
+        self.assertTrue(instance, self.model_cls)
 
 
 class TestBookedLoadModel(TestCase):
@@ -93,9 +93,9 @@ class TestBookedLoadModel(TestCase):
         instance = BookedLoadFactory()
 
         instance.refresh_from_db()
-        self.assertTrue(isinstance(instance, self.model_cls))
-        self.assertTrue(isinstance(instance.driver, DriverProfile))
-        self.assertTrue(isinstance(instance.dispatcher, DispatcherProfile))
-        self.assertTrue(isinstance(instance.broker, Broker))
+        self.assertTrue(instance, self.model_cls)
+        self.assertTrue(instance.driver, DriverProfile)
+        self.assertTrue(instance.dispatcher, DispatcherProfile)
+        self.assertTrue(instance.broker, Broker)
         self.assertIsNotNone(instance.load_id)
         self.assertIsNotNone(instance.invoice_id)

@@ -1,5 +1,5 @@
 from admin.manager_admin.admin import manager_admin_site
-from django.contrib import admin
+from admin.super_admin.admin import admin
 from django.urls import include, path
 
 urlpatterns = [

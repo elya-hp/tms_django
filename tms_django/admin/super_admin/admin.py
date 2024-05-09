@@ -106,3 +106,34 @@ class BillingAdmin(admin.ModelAdmin):
 
     def mark_loads_as_invoiced(self, request, queryset):
         queryset.update(status="invoiced")
+
+
+class DispatcherProfileInLine(admin.StackedInline):
+    model = DispatcherProfile
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+class DriverProfileInLine(admin.StackedInline):
+    model = DriverProfile
+    readonly_fields = ["unit_id"]
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_filter = ("user_type",)
+    list_display = ("id", "user_type", "first_name", "last_name", "email")
+    inlines = [
+        DispatcherProfileInLine,
+        DriverProfileInLine,
+    ]
+    # readonly_fields = ("unit_id",)
+    fields = (
+        "first_name",
+        "last_name",
+        "user_type",
+    )

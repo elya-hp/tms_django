@@ -10,7 +10,6 @@ class TestUser(TestCase):
         self.assertIsNotNone(user.id)
 
 
-# TODO: test Dispatcher Profile
 class TestDispatcherUser(TestCase):
     model_cls = User
 

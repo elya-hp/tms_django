@@ -1,0 +1,27 @@
+<h1>Booked loads:</h1>
+
+<form method="get" action="{% url 'tms:loadlist' %}">
+    {{ filter.form.as_p }}
+    <button type="submit">Filter</button>
+</form>
+
+<ul>
+    {% for bookedload in filter.qs %}
+        {{ bookedload.driver }} {{ bookedload.pickup_location }} {{ bookedload.delivery_location }}
+
+        <ul>
+            <li>
+                <a href="{% url 'tms:load_detail' bookedload.id %}">Detailed information</a>
+            </li>
+
+            <li>
+                <a href="{% url 'tms:load_update' bookedload.id %}">UPDATE information</a>
+            </li>
+
+            <li>
+                <a href="{% url 'tms:load_delete' bookedload.id %}">Delete</a>
+            </li>
+        </ul>
+    {% endfor %}
+</ul>
+

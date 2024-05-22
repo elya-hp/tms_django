@@ -39,7 +39,7 @@ class BookedLoadCreateForm(ModelForm):
 class BookedLoadCreateView(CreateView):
     model = BookedLoad
     form_class = BookedLoadCreateForm
-    template_name = "tms/bookedload_create_form.html"
+    template_name = "bookedload_create_form.html"
 
     def get_success_url(self):
         return reverse("tms:load_detail", kwargs={"pk": self.object.pk})
@@ -48,12 +48,12 @@ class BookedLoadCreateView(CreateView):
 #
 class BookedLoadDetailView(DetailView):
     model = BookedLoad
-    template_name = "tms/bookedload_detail.html"
+    template_name = "bookedload_detail.html"
 
 
 class BookedLoadListView(ListView):
     model = BookedLoad
-    template_name = "tms/bookedload_list.html"
+    template_name = "bookedload_list.html"
     context_object_name = "load_list"
 
     def get_context_data(self, **kwargs):
@@ -66,7 +66,7 @@ class BookedLoadListView(ListView):
 class BookedLoadUpdateView(UpdateView):
     model = BookedLoad
     fields = "__all__"
-    template_name = "tms/bookedload_update_form.html"
+    template_name = "bookedload_update_form.html"
     success_url = reverse_lazy("tms:load_list")
 
 
@@ -83,4 +83,4 @@ class BookedLoadFilter(django_filters.FilterSet):
 
 def booked_load_filtered(request):
     f = BookedLoadFilter(request.GET, queryset=BookedLoad.objects.all())
-    return render(request, "tms/bookedload_list.html", {"filter": f})
+    return render(request, "bookedload_list.html", {"filter": f})

@@ -149,7 +149,7 @@ class MilesCountApiTest(APITestCase):
 
     def test_count_miles_api_request(self):
         url = reverse("api:v1:count_miles")
-        request_data = {"pickup_zip_code": 19116, "delivery_zip_code": 90110}
+        request_data = {"pickup_zip_code": 19116, "delivery_zip_code": 90210}
         response = self.client.post(url, data=request_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.json())
 
@@ -161,6 +161,6 @@ class MilesCountApiTest(APITestCase):
             return_value=self.zipcodeapi_200,
         ) as mock_zipcode_api_request:
             url = reverse("api:v1:count_miles")
-            request_data = {"pickup_zip_code": 19116, "delivery_zip_code": 90110}
+            request_data = {"pickup_zip_code": 19116, "delivery_zip_code": 90210}
             response = self.client.post(url, data=request_data, format="json")
             self.assertEqual(response.status_code, status.HTTP_200_OK, response.json())

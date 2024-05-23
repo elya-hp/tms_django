@@ -1,3 +1,4 @@
+import os
 import uuid
 
 import httpx
@@ -129,7 +130,7 @@ class MilesCountSerializer(serializers.Serializer):
     @staticmethod
     def _zipcode_api_request(endpoint: str) -> tuple[int, dict]:
         # TODO: move to environment variable
-        api_key = "DemoOnly00yFnKGIBxtnI1KurreLWyNTBAC3zsrUMqVjXndSm1Ficwh0ibjMfwtb"
+        api_key = os.getenv("API_KEY")
         api_url = f"https://www.zipcodeapi.com/rest/{api_key}/{endpoint}"
         headers = {"Content-Type": "application/json"}
         response = httpx.get(api_url, headers=headers)

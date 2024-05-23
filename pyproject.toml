@@ -16,6 +16,7 @@ pre-commit = "^3.7.0"
 factory-boy = "^3.3.0"
 faker = "^24.9.0"
 django-filter = "^24.2"
+python-dotenv = "^1.0.1"
 
 
 [build-system]

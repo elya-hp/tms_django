@@ -30,6 +30,3 @@ class DriverUser(User):
 
     class Meta:
         proxy = True
-
-
-#################

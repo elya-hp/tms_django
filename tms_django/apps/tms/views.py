@@ -15,7 +15,7 @@ from .models import BookedLoad
 
 
 class HomePageView(TemplateView):
-    template_name = "tms/home_page.html"
+    template_name = "home_page.html"
 
 
 class BookedLoadCreateForm(ModelForm):

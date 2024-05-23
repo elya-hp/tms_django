@@ -2,7 +2,7 @@ from functools import partial
 
 from django.apps import apps
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import OperationalError, models
+from django.db import OperationalError
 from loguru import logger
 
 

@@ -46,7 +46,6 @@ class Broker(models.Model):
     agent_name = models.CharField(max_length=50)
     company_name = models.CharField(max_length=50)
     mc_number = models.CharField(max_length=10)
-    # TODO add more details (broker MC)
 
     def __str__(self) -> str:
         return f"{self.agent_name} from {self.company_name}, id={self.id}"

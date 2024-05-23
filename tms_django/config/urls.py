@@ -1,7 +1,5 @@
-import apps
 from admin.manager_admin.admin import manager_admin_site
 from admin.super_admin.admin import admin
-from apps import tms
 from django.urls import include, path
 
 urlpatterns = [

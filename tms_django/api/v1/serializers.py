@@ -3,6 +3,7 @@ import uuid
 
 import httpx
 from apps.tms.models import DispatcherProfile, DriverProfile
+from config.settings import ZIPCODE_API_KEY
 from django.contrib.auth import get_user_model
 from rest_framework import serializers, status
 from rest_framework.exceptions import APIException, ValidationError
@@ -129,9 +130,7 @@ class MilesCountSerializer(serializers.Serializer):
 
     @staticmethod
     def _zipcode_api_request(endpoint: str) -> tuple[int, dict]:
-        # TODO: move to environment variable
-        api_key = os.getenv("API_KEY")
-        api_url = f"https://www.zipcodeapi.com/rest/{api_key}/{endpoint}"
+        api_url = f"https://www.zipcodeapi.com/rest/{ZIPCODE_API_KEY}/{endpoint}"
         headers = {"Content-Type": "application/json"}
         response = httpx.get(api_url, headers=headers)
         return response.status_code, response.json()
